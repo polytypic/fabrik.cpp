@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -euo pipefail
+
+SESSION="fabrik"
+
+tmux start-server
+tmux new-session -d -s $SESSION
+
+tmux splitw -v
+tmux select-pane -t 0
+tmux splitw -h
+
+tmux select-pane -t 0
+tmux send-keys "npx livereload public --wait 100" C-m
+
+tmux select-pane -t 1
+tmux send-keys "npx serve docs" C-m
+
+tmux select-pane -t 2
+tmux send-keys "CC=emcc cppsm test-watch" C-m
+
+tmux attach-session -t $SESSION

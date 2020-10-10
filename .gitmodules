@@ -1,0 +1,24 @@
+[submodule ".cppsm"]
+	path = .cppsm
+	url = https://github.com/cppsm/cppsm-boilerplate.git
+	branch = master
+[submodule "equipment/testing.cpp/v1"]
+	path = equipment/testing.cpp/v1
+	url = https://github.com/per-framework/testing.cpp.git
+	branch = v1
+[submodule "equipment/polyfill.cpp/v1"]
+	path = equipment/polyfill.cpp/v1
+	url = https://github.com/per-framework/polyfill.cpp.git
+	branch = v1
+[submodule "requires/data.cpp/v1"]
+	path = requires/data.cpp/v1
+	url = https://github.com/per-framework/data.cpp.git
+	branch = v1
+[submodule "requires/math3d.cpp/v1"]
+	path = requires/math3d.cpp/v1
+	url = https://github.com/polytypic/math3d.cpp.git
+	branch = v1
+[submodule "equipment/gl.cpp/v1"]
+	path = equipment/gl.cpp/v1
+	url = https://github.com/polytypic/gl.cpp.git
+	branch = v1

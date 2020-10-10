@@ -1,0 +1,23 @@
+language: cpp
+
+notifications:
+  email: false
+
+matrix:
+  include:
+    - os: linux
+      dist: focal
+    - os: osx
+      osx_image: xcode12.2
+    - os: windows
+
+git:
+  depth: 1
+  submodules: false
+
+before_install:
+  - export -f travis_nanoseconds travis_time_start travis_time_finish
+
+script:
+  - if ! [ -x .cppsm/travis-ci ]; then git submodule --quiet update --init --no-recommend-shallow --depth 1 .cppsm; fi
+  - .cppsm/travis-ci

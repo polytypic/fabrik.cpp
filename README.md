@@ -24,7 +24,7 @@ CC=emcc cppsm test
 ```
 
 To test the browser samples you will need to serve the `docs` folder. For
-examples, Using
+example, using
 [`npx`](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b)
 you could say [`npx serve docs`](https://www.npmjs.com/package/serve) and then
 point your browser to

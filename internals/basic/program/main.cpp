@@ -39,10 +39,12 @@ static prepared_mesh prepared;
 static const auto projection = make_projection<float>(45, 1, 9);
 static const auto camera = make_translation(vec<float, 3>{0, 0, -8});
 
+static const auto projection_camera = projection * camera;
+
 static const auto center =
     homogenize(projection * camera * vec<float, 4>{0, 0, 0, 1});
 
-static const auto projection_camera_inverse = inverse(projection * camera);
+static const auto projection_camera_inv = inverse(projection_camera);
 
 static vec<float, 3> target = {1, -2, 0};
 static vec<float, 3> positions[] = {
@@ -54,13 +56,9 @@ EM_BOOL mouse_move(int, const EmscriptenMouseEvent *mouse_event, void *) {
     auto x = (mouse_event->targetX - 400) / 400.0f;
     auto y = (400 - mouse_event->targetY) / 400.0f;
 
-    auto r = projection_camera_inverse * vec<float, 4>{x, y, center[2], 1};
+    auto r = projection_camera_inv * vec<float, 4>{x, y, center[2], 1};
 
-    r = r * (1 / r[3]);
-
-    target[0] = r[0];
-    target[1] = r[1];
-    target[2] = r[2];
+    target = sub<3>(homogenize(r));
   }
   return true;
 }
@@ -91,9 +89,7 @@ EM_BOOL animation_frame(double, void *) {
                                 {0, 0, 0, 1}}} *
                  make_scaling(vec<float, 3>{distance, 0.1, 0.1});
 
-    auto view = camera * world;
-
-    render(prepared, view, projection);
+    render(prepared, world, projection_camera);
   } while (currentPos != lastPos);
 
   return true;

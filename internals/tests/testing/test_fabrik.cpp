@@ -28,6 +28,8 @@ auto fabrik_test = test([]() {
            0.0001);
   }
 
+  verify(0 == move_to(target, 0.001f, positions, distances, 100));
+
   verify(0 ==
          move_to(make_vec(6.0f, 0.0f, 0.0f), 0.001f, positions, distances, 1));
 });

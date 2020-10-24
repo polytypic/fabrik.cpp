@@ -14,6 +14,8 @@
 
 namespace basic {
 
+static const auto viewport = make_vec(800, 800);
+
 static const basic::vertex vertices[] = {
     {{0, 0, 0}, {-1, 0, 0}},
     {{0.2, 0, -1}, {0, 0, -1}},
@@ -36,13 +38,13 @@ static const basic::triangle indices[] = {
 
 static prepared_mesh prepared;
 
-static const auto projection = make_projection<float>(45, 1, 9);
-static const auto camera = make_translation(vec<float, 3>{0, 0, -8});
+static const auto projection = make_projection(45.0f, 1.0f, 9.0f);
+static const auto camera = make_translation(make_vec(0.0f, 0.0f, -8.0f));
 
 static const auto projection_camera = projection * camera;
 
-static const auto center =
-    homogenize(projection * camera * vec<float, 4>{0, 0, 0, 1});
+static const auto center_z =
+    homogenize(projection * camera * make_vec(0, 0, 0, 1))[2];
 
 static const auto projection_camera_inv = inverse(projection_camera);
 
@@ -53,10 +55,12 @@ static const float distances[] = {1, 1.5, 0.5, 1, 0.5};
 
 EM_BOOL mouse_move(int, const EmscriptenMouseEvent *mouse_event, void *) {
   if (mouse_event->buttons & 1) {
-    auto x = (mouse_event->targetX - 400) / 400.0f;
-    auto y = (400 - mouse_event->targetY) / 400.0f;
+    auto mouse_pos =
+        (make_vec(mouse_event->targetX, mouse_event->targetY) * 2.0f -
+         viewport) /
+        viewport * make_vec(1, -1);
 
-    auto r = projection_camera_inv * vec<float, 4>{x, y, center[2], 1};
+    auto r = projection_camera_inv * make_vec(mouse_pos, center_z, 1.0f);
 
     target = sub<3>(homogenize(r));
   }
@@ -79,15 +83,15 @@ EM_BOOL animation_frame(double, void *) {
     auto distance = mag(delta);
 
     auto x = delta * (1 / distance);
-    auto y = normalize(cross(vec<float, 3>{0, 0, 1}, x));
+    auto y = normalize(cross(make_vec(0, 0, 1), x));
     auto z = cross(x, y);
 
     auto world = make_translation(previous) *
-                 mtx<float, 4>{{{x[0], y[0], z[0], 0},
-                                {x[1], y[1], z[1], 0},
-                                {x[2], y[2], z[2], 0},
-                                {0, 0, 0, 1}}} *
-                 make_scaling(vec<float, 3>{distance, 0.1, 0.1});
+                 from_columns(make_vec(x, 0),
+                              make_vec(y, 0),
+                              make_vec(z, 0),
+                              make_vec(0, 0, 0, 1)) *
+                 make_scaling(make_vec(distance, 0.1f, 0.1f));
 
     render(prepared, world, projection_camera);
   } while (currentPos != lastPos);
@@ -98,7 +102,7 @@ EM_BOOL animation_frame(double, void *) {
 void main() {
   gl::Init("canvas");
 
-  gl::Viewport(0, 0, 800, 800);
+  gl::Viewport(viewport);
 
   if (EMSCRIPTEN_RESULT_SUCCESS != emscripten_set_mousemove_callback(
                                        "canvas", nullptr, false, mouse_move) ||

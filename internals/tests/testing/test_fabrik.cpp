@@ -17,13 +17,14 @@ auto fabrik_test = test([]() {
       {0, 0, 0}, {0, 1, 0}, {0, 2.5, 0}, {0, 3, 0}, {0, 5, 0}, {0, 5.5, 0}};
   float distances[] = {1, 1.5, 0.5, 2, 0.5};
 
-  auto iters = move_to(target, 0.001, positions, distances, 100);
+  auto iters = move_to(target, 0.001f, positions, distances, 100);
 
   verify(0 < iters && iters <= 100);
 
   verify(mag(positions[size(positions) - 1] - target) <= 0.001);
 
   for (size_t i = 0; i < size(distances); ++i) {
-    verify(abs(mag(positions[i] - positions[i + 1]) - distances[i]) < 0.0001);
+    verify(std::abs(mag(positions[i] - positions[i + 1]) - distances[i]) <
+           0.0001);
   }
 });

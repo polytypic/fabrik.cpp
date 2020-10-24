@@ -1,3 +1,8 @@
+if(NOT EMSCRIPTEN)
+  message(WARNING "`basic` example currently requires Emscripten.")
+  return()
+endif()
+
 add_conventional_executable(basic)
 target_link_libraries(basic PRIVATE fabrik_v1 gl_v1 emscripten_system_include)
 target_link_options(basic PUBLIC

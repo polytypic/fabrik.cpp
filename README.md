@@ -1,4 +1,4 @@
-# [FABRIK.C++](#) [![Build Status](https://travis-ci.org/polytypic/fabrik.cpp.svg?branch=v1)](https://travis-ci.org/polytypic/fabrik.cpp)
+# [FABRIK.C++](#) [![Build Status](https://travis-ci.org/polytypic/fabrik.cpp.svg?branch=v1)](https://travis-ci.org/polytypic/fabrik.cpp) [![Code Coverage](https://img.shields.io/codecov/c/github/polytypic/fabrik.cpp/v1.svg)](https://codecov.io/gh/polytypic/fabrik.cpp/branch/v1)
 
 [FABRIK](http://andreasaristidou.com/FABRIK.html) implementation in C++.
 

@@ -1,9 +1,8 @@
 #include "data_v1/array.hpp"
 #include "fabrik_v1/synopsis.hpp"
 #include "gl_v1/gl.hpp"
-#include "math3d_v1/mtx.hpp"
 #include "math3d_v1/transform.hpp"
-#include "math3d_v1/vec.hpp"
+#include "math3d_v1/trig.hpp"
 
 #include <cstddef>
 #include <cstdint>
@@ -38,7 +37,7 @@ static const basic::triangle indices[] = {
 
 static prepared_mesh prepared;
 
-static const auto projection = make_projection(45.0f, 1.0f, 9.0f);
+static const auto projection = make_projection(from_angle(45.0f), 1.0f, 9.0f);
 static const auto camera = make_translation(make_vec(0.0f, 0.0f, -8.0f));
 
 static const auto projection_camera = projection * camera;

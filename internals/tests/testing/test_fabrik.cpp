@@ -27,4 +27,7 @@ auto fabrik_test = test([]() {
     verify(std::abs(mag(positions[i] - positions[i + 1]) - distances[i]) <
            0.0001);
   }
+
+  verify(0 ==
+         move_to(make_vec(6.0f, 0.0f, 0.0f), 0.001f, positions, distances, 1));
 });

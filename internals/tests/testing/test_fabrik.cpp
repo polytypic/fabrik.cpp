@@ -12,8 +12,8 @@ using namespace math3d_v1;
 using namespace fabrik_v1;
 
 auto fabrik_test = test([]() {
-  vec<float, 3> target = {1, -2, 3};
-  vec<float, 3> positions[] = {
+  vec_t<float, 3> target = {1, -2, 3};
+  vec_t<float, 3> positions[] = {
       {0, 0, 0}, {0, 1, 0}, {0, 2.5, 0}, {0, 3, 0}, {0, 5, 0}, {0, 5.5, 0}};
   float distances[] = {1, 1.5, 0.5, 2, 0.5};
 
@@ -30,6 +30,5 @@ auto fabrik_test = test([]() {
 
   verify(0 == move_to(target, 0.001f, positions, distances, 100));
 
-  verify(0 ==
-         move_to(make_vec(6.0f, 0.0f, 0.0f), 0.001f, positions, distances, 1));
+  verify(0 == move_to(vec(6.0f, 0.0f, 0.0f), 0.001f, positions, distances, 1));
 });

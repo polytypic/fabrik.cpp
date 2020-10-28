@@ -7,27 +7,27 @@
 
 namespace basic {
 
-struct vertex {
-  vec<GLfloat, 3> position;
-  vec<GLfloat, 3> normal;
+struct vertex_t {
+  vec_t<GLfloat, 3> position;
+  vec_t<GLfloat, 3> normal;
 };
 
-struct triangle {
+struct triangle_t {
   GLuint vertices[3];
 };
 
-struct prepared_mesh {
+struct prepared_mesh_t {
   gl::VertexArray vertex_array;
   gl::Buffer vertex_buffer;
   gl::Buffer index_buffer;
   size_t num_indices;
 };
 
-prepared_mesh prepare_mesh(const contiguous<const vertex> &vertices,
-                           const contiguous<const triangle> &indices);
+prepared_mesh_t prepare_mesh(const contiguous_t<const vertex_t> &vertices,
+                             const contiguous_t<const triangle_t> &indices);
 
-void render(const prepared_mesh &mesh,
-            const mtx<float, 4> &view,
-            const mtx<float, 4> &projection);
+void render(const prepared_mesh_t &mesh,
+            const mtx_t<float, 4> &view,
+            const mtx_t<float, 4> &projection);
 
 } // namespace basic

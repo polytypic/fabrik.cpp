@@ -22,3 +22,7 @@
 	path = equipment/gl.cpp/v1
 	url = https://github.com/polytypic/gl.cpp.git
 	branch = v1
+[submodule "equipment/emscripten.cpp/v1"]
+	path = equipment/emscripten.cpp/v1
+	url = https://github.com/polytypic/emscripten.cpp.git
+	branch = v1

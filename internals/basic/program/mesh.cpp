@@ -1,5 +1,7 @@
 #include "mesh.hpp"
 
+#include "math3d_v1/mtx.hpp"
+
 #include "gl_v1/gl.hpp"
 
 namespace basic {
@@ -49,9 +51,9 @@ static void compile_program() {
 
 } // namespace basic
 
-basic::prepared_mesh
-basic::prepare_mesh(const contiguous<const vertex> &vertices,
-                    const contiguous<const triangle> &indices) {
+basic::prepared_mesh_t
+basic::prepare_mesh(const contiguous_t<const vertex_t> &vertices,
+                    const contiguous_t<const triangle_t> &indices) {
   compile_program();
 
   auto vertex_array = gl::GenVertexArray();
@@ -69,27 +71,29 @@ basic::prepare_mesh(const contiguous<const vertex> &vertices,
 
   auto position_loc = gl::GetAttribLocation(s_program, "position");
   gl::EnableVertexAttribArray(position_loc);
-  gl::VertexAttribPointer(position_loc, &vertex::position);
+  gl::VertexAttribPointer(position_loc, &vertex_t::position);
 
   auto normal_loc = gl::GetAttribLocation(s_program, "normal");
   gl::EnableVertexAttribArray(normal_loc);
-  gl::VertexAttribPointer(normal_loc, &vertex::normal);
+  gl::VertexAttribPointer(normal_loc, &vertex_t::normal);
+
+  auto num_indices = indices.size() * 3;
 
   return {std::move(vertex_array),
           std::move(vertex_buffer),
           std::move(index_buffer),
-          indices.size() * 3};
+          num_indices};
 }
 
-void basic::render(const prepared_mesh &mesh,
-                   const mtx<float, 4> &view,
-                   const mtx<float, 4> &projection) {
+void basic::render(const prepared_mesh_t &mesh,
+                   const mtx_t<float, 4> &view,
+                   const mtx_t<float, 4> &projection) {
   gl::Enable(gl::CULL_FACE);
 
   gl::BindVertexArray(mesh.vertex_array);
 
   gl::Uniform(gl::GetUniformLocation(s_program, "color"),
-              vec<float, 3>{1, 1, 1});
+              vec_t<float, 3>{1, 1, 1});
 
   gl::Uniform(gl::GetUniformLocation(s_program, "view"), view);
   gl::Uniform(gl::GetUniformLocation(s_program, "view_inv_trn"),

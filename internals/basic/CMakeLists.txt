@@ -4,7 +4,7 @@ if(NOT EMSCRIPTEN)
 endif()
 
 add_conventional_executable(basic)
-target_link_libraries(basic PRIVATE fabrik_v1 gl_v1 emscripten_system_include)
+target_link_libraries(basic PRIVATE fabrik_v1 gl_v1 emscripten_v1)
 target_link_options(basic PUBLIC
   "SHELL:-s USE_WEBGL2=1"
   "SHELL:-s MIN_WEBGL_VERSION=2"

@@ -9,17 +9,18 @@
 using namespace math3d_v1;
 using namespace data_v1;
 
-bool fabrik_v1::is_within_tolerance(const vec<float, 3> &target,
-                                    float tolerance,
-                                    const strided<vec<float, 3>> &positions) {
+bool fabrik_v1::is_within_tolerance(
+    const vec_t<float, 3> &target,
+    float tolerance,
+    const strided_t<vec_t<float, 3>> &positions) {
   assert(2 <= positions.size());
 
   return norm(target - positions.back()) <= tolerance * tolerance;
 }
 
-void fabrik_v1::adjust_from(const vec<float, 3> &root,
-                            const strided<vec<float, 3>> &positions,
-                            const strided<const float> &distances) {
+void fabrik_v1::adjust_from(const vec_t<float, 3> &root,
+                            const strided_t<vec_t<float, 3>> &positions,
+                            const strided_t<const float> &distances) {
   assert(2 <= positions.size());
   assert(positions.size() == distances.size() + 1);
 
@@ -36,9 +37,9 @@ void fabrik_v1::adjust_from(const vec<float, 3> &root,
   } while (currentPos != lastPos);
 }
 
-void fabrik_v1::point_towards(const vec<float, 3> &target,
-                              const strided<vec<float, 3>> &positions,
-                              const strided<const float> &distances) {
+void fabrik_v1::point_towards(const vec_t<float, 3> &target,
+                              const strided_t<vec_t<float, 3>> &positions,
+                              const strided_t<const float> &distances) {
   assert(2 <= positions.size());
   assert(positions.size() == distances.size() + 1);
 
@@ -53,13 +54,12 @@ void fabrik_v1::point_towards(const vec<float, 3> &target,
   } while (currentPos != lastPos);
 }
 
-size_t fabrik_v1::move_to(const vec<float, 3> &target,
+size_t fabrik_v1::move_to(const vec_t<float, 3> &target,
                           float tolerance,
-                          const strided<vec<float, 3>> &positions,
-                          const strided<const float> &distances,
+                          const strided_t<vec_t<float, 3>> &positions,
+                          const strided_t<const float> &distances,
                           size_t max_iter) {
   assert(0 < max_iter);
-  assert(2 <= positions.size());
   assert(positions.size() == distances.size() + 1);
 
   if (is_within_tolerance(target, tolerance, positions)) {
